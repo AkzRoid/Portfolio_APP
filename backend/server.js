@@ -20,6 +20,9 @@ app.use(express.json());
 // e.g. http://localhost:5000/uploads/my-image.jpg
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // ── Routes ────────────────────────────────────────────────────
+app.get('/', (req, res) => {
+  res.json({ message: 'Portfolio API is running', status: 'OK' });
+});
 app.use('/api/auth', authRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/comments', commentRoutes);
