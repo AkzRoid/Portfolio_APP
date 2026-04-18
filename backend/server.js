@@ -14,7 +14,7 @@ connectDB(); // Connect to MongoDB
 // ── Middleware ─────────────────────────────────────────────────
 // Allow frontend to call this server
 app.use(cors({
-  origin: ['https://portfolio-qvfcex0aa-akzroids-projects.vercel.app', 'https://portfolio-app-murex-seven.vercel.app', 'http://localhost:3000'],
+  origin: ['https://portfolio-leauo9yx0-akzroids-projects.vercel.app', 'https://portfolio-qvfcex0aa-akzroids-projects.vercel.app', 'https://portfolio-app-murex-seven.vercel.app', 'http://localhost:3000'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
