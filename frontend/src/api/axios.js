@@ -1,7 +1,7 @@
 //frontend/src/api/axios.js
 import axios from 'axios';
 
-export const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://portfoliso-app-nn9w.onrender.com/api';
+export const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://portfolio-app-nn9w.onrender.com/api';
 export const UPLOAD_BASE_URL = API_BASE_URL.replace(/\/api$/, '');
 
 const instance = axios.create({
