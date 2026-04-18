@@ -3,31 +3,37 @@ const nodemailer = require('nodemailer');
 
 // Create email transporter with better error handling
 let transporter;
+const emailUser = process.env.EMAIL_USER;
+const emailPassword = process.env.EMAIL_PASSWORD;
 
-try {
-  transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false, // Use TLS
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASSWORD
-    },
-    tls: {
-      rejectUnauthorized: false // Accept self-signed certificates
-    }
-  });
+if (!emailUser || !emailPassword) {
+  console.error('❌ Email configuration error: EMAIL_USER and EMAIL_PASSWORD must be set in .env');
+} else {
+  try {
+    transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 587,
+      secure: false, // Use TLS
+      auth: {
+        user: emailUser,
+        pass: emailPassword
+      },
+      tls: {
+        rejectUnauthorized: false // Accept self-signed certificates
+      }
+    });
 
-  // Verify transporter configuration
-  transporter.verify((error, success) => {
-    if (error) {
-      console.error('❌ Email configuration error:', error);
-    } else {
-      console.log('✅ Email service ready');
-    }
-  });
-} catch (error) {
-  console.error('❌ Failed to initialize email transporter:', error);
+    // Verify transporter configuration
+    transporter.verify((error, success) => {
+      if (error) {
+        console.error('❌ Email configuration error:', error);
+      } else {
+        console.log('✅ Email service ready');
+      }
+    });
+  } catch (error) {
+    console.error('❌ Failed to initialize email transporter:', error);
+  }
 }
 
 // Function to send password reset email
@@ -66,6 +72,12 @@ const sendPasswordResetEmail = async (email, resetCode, userName) => {
         </div>
       `
     };
+
+    if (!transporter) {
+      const message = 'Email service is not configured. Please set EMAIL_USER and EMAIL_PASSWORD in your .env file.';
+      console.error('❌ Email sending error:', message);
+      return { success: false, message };
+    }
 
     console.log(`📧 Attempting to send email to ${email}...`);
     

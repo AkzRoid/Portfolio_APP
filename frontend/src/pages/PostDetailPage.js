@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import API from '../api/axios';
+import API, { UPLOAD_BASE_URL } from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 
 const PostDetailPage = () => {
@@ -148,7 +148,7 @@ const PostDetailPage = () => {
     <div style={styles.page}>
       <article style={styles.postDetail}>
         <h1>{post.title}</h1>
-        {post.image && <img src={`http://localhost:5000/uploads/${post.image}`} alt={post.title} style={styles.postImage} />}
+        {post.image && <img src={`${UPLOAD_BASE_URL}/uploads/${post.image}`} alt={post.title} style={styles.postImage} />}
         <p className="post-body">{post.body}</p>
         <div style={styles.postMeta}>
           <span>By {post.author?.name || 'Unknown'}</span>
@@ -182,7 +182,7 @@ const PostDetailPage = () => {
                 <div style={styles.commentHeader}>
                   <div style={styles.commentAuthor}>
                     {comment.author?.profilePic ? (
-                      <img src={`http://localhost:5000/uploads/${comment.author.profilePic}`} alt={comment.author.name} style={styles.commentAvatar} />
+                      <img src={`${UPLOAD_BASE_URL}/uploads/${comment.author.profilePic}`} alt={comment.author.name} style={styles.commentAvatar} />
                     ) : (
                       <div style={{ ...styles.commentAvatar, backgroundColor: '#ccc', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>{comment.author?.name?.[0]?.toUpperCase() || 'U'}</div>
                     )}

@@ -12,8 +12,13 @@ const adminRoutes = require('./routes/admin.routes');
 const app = express();
 connectDB(); // Connect to MongoDB
 // ── Middleware ─────────────────────────────────────────────────
-// Allow React (port 3000) to call this server
-app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:3000', credentials: true }));
+// Allow frontend to call this server
+app.use(cors({
+  origin: ['https://portfolio-app-mpss.vercel.app', 'http://localhost:3000'],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 // Parse incoming JSON request bodies
 app.use(express.json());
 // Serve uploaded image files as public URLs

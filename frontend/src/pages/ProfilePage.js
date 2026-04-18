@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import API from '../api/axios';
+import API, { UPLOAD_BASE_URL } from '../api/axios';
 
 const ProfilePage = () => {
   useEffect(() => {
@@ -16,7 +16,7 @@ const ProfilePage = () => {
   const [msg, setMsg] = useState('');
 
   const picSrc = user?.profilePic
-    ? `http://localhost:5000/uploads/${user.profilePic}`
+    ? `${UPLOAD_BASE_URL}/uploads/${user.profilePic}`
     : '/default-avatar.png';
 
   const handleProfile = async (e) => {

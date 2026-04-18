@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import API from '../api/axios';
+import API, { UPLOAD_BASE_URL } from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 
 const FeedPage = () => {
@@ -83,7 +83,7 @@ const FeedPage = () => {
                 <div className="author-info">
                   <div className="author-avatar">
                     {post.author?.profilePic ? (
-                      <img src={`http://localhost:5000/uploads/${post.author.profilePic}`} alt={post.author.name} />
+                      <img src={`${UPLOAD_BASE_URL}/uploads/${post.author.profilePic}`} alt={post.author.name} />
                     ) : (
                       <div className="default-avatar">{post.author?.name?.[0]?.toUpperCase() || 'U'}</div>
                     )}
@@ -99,7 +99,7 @@ const FeedPage = () => {
                 <p className="post-body">{post.body}</p>
                 {post.image && (
                   <div className="post-image-container">
-                    <img src={`http://localhost:5000/uploads/${post.image}`} alt={post.title} className="post-image" />
+                    <img src={`${UPLOAD_BASE_URL}/uploads/${post.image}`} alt={post.title} className="post-image" />
                   </div>
                 )}
               </div>
