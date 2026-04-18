@@ -14,7 +14,16 @@ connectDB(); // Connect to MongoDB
 // ── Middleware ─────────────────────────────────────────────────
 // Allow frontend to call this server
 app.use(cors({
-  origin: ['https://portfolio-6i72itdvx-akzroids-projects.vercel.app', 'https://portfolio-leauo9yx0-akzroids-projects.vercel.app', 'https://portfolio-qvfcex0aa-akzroids-projects.vercel.app', 'https://portfolio-app-murex-seven.vercel.app', 'http://localhost:3000'],
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    // Allow localhost for development
+    if (origin.includes('localhost')) return callback(null, true);
+    // Allow all Vercel domains
+    if (origin.includes('vercel.app')) return callback(null, true);
+    // Reject other origins
+    return callback(new Error('Not allowed by CORS'));
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
