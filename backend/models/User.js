@@ -18,6 +18,8 @@ const userSchema = new mongoose.Schema({
 // Pre-save hook: hash password before storing
 userSchema.pre('save', async function () {
   if (!this.isModified('password')) return;
+  // Check if password is already hashed (starts with $2a$, $2b$, or $2y$)
+  if (this.password.startsWith('$2')) return;
   this.password = await bcrypt.hash(this.password, 12);
 });
 

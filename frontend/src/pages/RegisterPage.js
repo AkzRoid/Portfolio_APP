@@ -1,6 +1,7 @@
 //frontend/src/pages/RegisterPage.js
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import API from '../api/axios';
 
 const RegisterPage = () => {
@@ -11,6 +12,7 @@ const RegisterPage = () => {
   const [form, setForm] = useState({ name: '', email: '', password: '' });
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { setUser } = useAuth();
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -20,6 +22,7 @@ const RegisterPage = () => {
     try {
       const { data } = await API.post('/auth/register', form);
       localStorage.setItem('token', data.token);
+      setUser(data.user);
       navigate('/home');
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed.');
